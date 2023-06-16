@@ -73,49 +73,23 @@ namespace PipesNewVersion
 
         public void userinput()
         {
-            var UserInput = Console.ReadKey(true);
-
-            switch (UserInput.Key)
+            var userInput = Console.ReadKey(true);
+            if (userInput.Key == ConsoleKey.Spacebar)
             {
-                case ConsoleKey.UpArrow:
-                    if (Peker - coll >= 0)
-                    {
-                        Peker -= coll;
-                    }
-                    break;
-
-                case ConsoleKey.DownArrow:
-                    if (Peker + coll < Pipes.Count)
-                    {
-                        Peker += coll;
-                    }
-                    break;
-
-                case ConsoleKey.LeftArrow:
-                    if (Peker > 0)
-                    {
-                        Peker--;
-                    }
-                    break;
-
-                case ConsoleKey.RightArrow:
-                    if (Peker < Pipes.Count - 1)
-                    {
-                        Peker++;
-                    }
-                    break;
-
-                case ConsoleKey.Spacebar:
-                    Pipes[Peker].Turn();
-                    break;
-
-                default:
-                    break;
+                Pipes[Peker].Turn();
+                DrawBoard();
+                return;
             }
-
-
+            Peker += userInput.Key switch
+            {
+                ConsoleKey.UpArrow => -coll,
+                ConsoleKey.DownArrow => coll,
+                ConsoleKey.RightArrow => 1,
+                ConsoleKey.LeftArrow => -1,
+            };
             DrawBoard();
         }
+
     }
 }
 
