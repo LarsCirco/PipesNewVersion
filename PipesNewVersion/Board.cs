@@ -13,6 +13,7 @@ namespace PipesNewVersion
         private Random random = new Random();
         public List<Pipe> Pipes { get; set; } = new List<Pipe>();
         private int coll;
+        private int Peker = 0;
 
         public Board(int Row,int Coll)
         {
@@ -33,15 +34,34 @@ namespace PipesNewVersion
         public void DrawBoard()
         {
             Console.Clear();
-            int count = 0; 
+            int count = 0;
+
+
             foreach (var pipe in Pipes)
             {
+                if (count % coll == 0)
+                {
+                    Console.WriteLine();
+                }
+
+                if (count == Peker)
+                {
+                    Console.ForegroundColor = ConsoleColor.Black;
+                }
+                else
+                {
+                    Console.ResetColor();
+                }
+
                 pipe.Write();
                 count++;
-                if (count % coll == 0)
-                { Console.WriteLine(" "); }
             }
+            Console.ResetColor();
+            if (count % coll == 0)
+            {
+                Console.WriteLine(" ");
 
+            }
 
         }
         private Pipe RandomPipe()
@@ -51,10 +71,49 @@ namespace PipesNewVersion
 
         }
 
-        public void userinput(string index)
+        public void userinput()
         {
-            int.TryParse(index, out int input);
-            Pipes[input].Turn();
+            var UserInput = Console.ReadKey(true);
+
+            switch (UserInput.Key)
+            {
+                case ConsoleKey.UpArrow:
+                    if (Peker - coll >= 0)
+                    {
+                        Peker -= coll;
+                    }
+                    break;
+
+                case ConsoleKey.DownArrow:
+                    if (Peker + coll < Pipes.Count)
+                    {
+                        Peker += coll;
+                    }
+                    break;
+
+                case ConsoleKey.LeftArrow:
+                    if (Peker > 0)
+                    {
+                        Peker--;
+                    }
+                    break;
+
+                case ConsoleKey.RightArrow:
+                    if (Peker < Pipes.Count - 1)
+                    {
+                        Peker++;
+                    }
+                    break;
+
+                case ConsoleKey.Spacebar:
+                    Pipes[Peker].Turn();
+                    break;
+
+                default:
+                    break;
+            }
+
+
             DrawBoard();
         }
     }

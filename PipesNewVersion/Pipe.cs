@@ -23,7 +23,9 @@ namespace PipesNewVersion
 
         public void Write()
         {
+            Console.BackgroundColor = ConsoleColor.Cyan;
             Console.Write(Characters[(int)_pipeType] + "   ");
         }
     }
 }
+ 

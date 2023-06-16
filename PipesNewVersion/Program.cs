@@ -4,10 +4,12 @@ using PipesNewVersion;
 
 Console.WriteLine("Hello, World!");
 Console.OutputEncoding = System.Text.Encoding.UTF8;
+
 var board = new Board(10,5);
+board.DrawBoard();
 
 while (true)
 {
-    var inputUser = Console.ReadLine();
-    board.userinput(inputUser!);
+    board.userinput();
+
 }
